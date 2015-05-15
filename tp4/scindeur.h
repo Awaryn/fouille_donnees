@@ -217,7 +217,7 @@ double r2() {
 
 // initialise N et df 
 
-void init(uint16_t N[NB_CAT], uint16_t df[NB_CAT][taille_voca]) {
+void init(uint16_t N[NB_CAT], uint16_t** df) {
     int k;
     for (k = 0; k < NB_CAT; k++) {
         // on initialise N avec des 0
@@ -231,7 +231,7 @@ void init(uint16_t N[NB_CAT], uint16_t df[NB_CAT][taille_voca]) {
 
 // initialise N, D et df 
 
-void init2(uint16_t N[NB_CAT], uint32_t D[NB_CAT], uint16_t tf[NB_CAT][taille_voca]) {
+void init2(uint16_t N[NB_CAT], uint32_t D[NB_CAT], uint16_t** tf) {
     int k;
     for (k = 0; k < NB_CAT; k++) {
         // on initialise N avec des 0
@@ -244,19 +244,21 @@ void init2(uint16_t N[NB_CAT], uint32_t D[NB_CAT], uint16_t tf[NB_CAT][taille_vo
     }
 }
 
-void initPiF(double PiF[NB_CAT], uint16_t N[NB_CAT], uint16_t df[NB_CAT][taille_voca], int m) {
-    int k;
-    for (k = 0; k < NB_CAT; k++) {
+void initPiF(double PiF[NB_CAT], uint16_t N[NB_CAT], uint16_t** df, int m) {
+  int k;
+  uint16_t** dfk;
+
+   for (k = 0; k < NB_CAT; k++) {
         PiF[k] = log((double) N[k] / (double) m);
-        uint16_t(*dfk)[taille_voca];
-        dfk = &(df[k]);
+         dfk = &(df[k]);
         uint16_t Nk = N[k];
         int i;
         for (i = 0; i < taille_voca; i++) {
-            PiF[k] += log((double) (Nk - (*dfk)[i - 1] + 1));
+            PiF[k] += log((double) (Nk - (*dfk)[i] + 1));
         }
         PiF[k] -= taille_voca * log((double) (Nk + 2));
     }
+
 }
 
 

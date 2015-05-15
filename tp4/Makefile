@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-W -Wall -g
+CFLAGS=-W -Wall -g -Wextra
 LDFLAGS=-lm
 EXEC=scindeur lirefichier
 
